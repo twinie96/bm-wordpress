@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  wordpress:
+    image: twinie96/bm-wordpress
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: wordpress
+      DB_HOST: mysql
+    networks:
+      - wordpress
+
+  mysql:
+    image: mysql:5
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+    networks:
+      - wordpress
+    volumes:
+      - ./persistent_mysql_data:/var/lib/mysql
+
+networks:
+  wordpress:
+    external: true
